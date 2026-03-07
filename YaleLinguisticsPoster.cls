@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{YaleLinguisticsPoster}[2026-03-04, v0] % Florence Zhang-Yukun
+\ProvidesClass{YaleLinguisticsPoster}[2026-03-06, v0.0.1] % Florence Zhang-Yukun
 \LoadClass{standalone}
 
 
@@ -123,7 +123,7 @@
         \ifundef{\profilepath}{\IfFileExists{assets/Default_pfp.svg}{\providecommand{\insertdefaultprofilepic}{\includesvg[width=70mm]{assets/Default_pfp.svg}}\ClassWarning{YaleLinguisticsPoster}{No profile picture}}{}}{}%
         \ifundef{\insertname}{\newcommand{\insertname}{Given Family}\ClassWarning{YaleLinguisticsPoster}{Speaker name set to default}}{}%
         \ifundef{\inserttitle}{\newcommand{\inserttitle}{This is a title: And this is a subtitle}\ClassWarning{YaleLinguisticsPoster}{Title set to default}}{}%
-        \ifundef{\insertabstract}{\newcommand{\insertabstract}{{\lipsum[1-2]}\par\ex Klingon\\\begingl\gla DaH mojaq-mey-vam DI-vuS-nIS-beʼ ʼeʼ vI-Har.//\glb now suffix-\Pl{}-\Dem{} \Fpl{}>\Tpl{}-limit-need-\Neg{} \Comp{} \Fsg{}>\Tsg{}-believe// \glft`I believe that we do not need to limit these suffixes now.'//\endgl\xe{\lipsum[3]}}\ClassWarning{YaleLinguisticsPoster}{Abstract set to default}}{}%
+        \ifundef{\insertabstract}{\newcommand{\insertabstract}{\large{\lipsum[1-2]}\par\ex Klingon\\\begingl\gla DaH mojaq-mey-vam DI-vuS-nIS-beʼ ʼeʼ vI-Har.//\glb now suffix-\Pl{}-\Dem{} \Fpl{}>\Tpl{}-limit-need-\Neg{} \Comp{} \Fsg{}>\Tsg{}-believe// \glft`I believe that we do not need to limit these suffixes now.'//\endgl\xe{\lipsum[3]}}\ClassWarning{YaleLinguisticsPoster}{Abstract set to default}}{}%
     }
     
     
@@ -133,11 +133,7 @@
 
 
 % Drawing the poster
-\newlength{\widthofAbstract}
-\settowidth{\widthofAbstract}{\huge\bfseries Abstract}
 
-\newlength{\widthofname}
-\AtBeginDocument{\ifundef{\insertname}{\settowidth{\widthofname}{\textbf{Given Family}}}{\settowidth{\widthofname}{\bfseries\insertname}}}
 
 
 
@@ -186,9 +182,9 @@
         \node[anchor = north east, align=justify, inner sep = 0pt, outer sep = 0pt, text width=130mm-\lefttitleskip, text = white,] at (205mm, 225mm) {%
             \begin{tcolorbox}[
                 standard jigsaw, boxsep = 0mm, beforeafter skip = 0mm, leftright skip = 0mm, 
-                empty, overlay={\draw[line width = 2pt,yellow]
-                ([xshift = 4\widthofname]title.west) -- (title.west -| frame.north east) --(frame.south east)--(frame.south west);},
-                fonttitle=\bfseries\fontsize{4\dimexpr\fontdimen6\font}{1.2\dimexpr\fontdimen6\font}\selectfont, coltitle = yellow, title = {\insertname},
+                empty,
+                attach boxed title to top left, boxed title style={empty,size=minimal}, fonttitle=\bfseries\fontsize{4\dimexpr\fontdimen6\font}{1.2\dimexpr\fontdimen6\font}\selectfont, coltitle = yellow, title = {\insertname},
+                overlay={\draw[line width = 2pt,yellow] (title.east) -- (title.east -| frame.north east) --(frame.south east)--(frame.south west);},
                 colback = white, opacityback=0, 
                 coltext = white, left = 0mm, right = 3mm, bottom = 3mm, 
                 ]
@@ -207,9 +203,9 @@
         \node[anchor = north west, align=justify, text width=200mm, text = white, font=,] at ([yshift = -30mm+\beforeabstractskip]pic.south west) {%
             \begin{tcolorbox}[
                 standard jigsaw, boxsep = 0mm, beforeafter skip = 0mm, leftright skip = 0mm, 
-                %colframe = yellow, boxrule = 2pt, sharp corners,
-                empty, overlay={\draw[line width = 2pt,yellow] ([xshift = \widthofAbstract]title.west) -- (frame.north east |- title.east) -- (frame.south east) --(frame.south west);},
-                fonttitle=\huge\bfseries, coltitle = yellow, title = {Abstract},
+                empty, 
+                attach boxed title to top left, boxed title style={empty,size=minimal}, fonttitle=\huge\bfseries, coltitle = yellow, title = {Abstract}, 
+                overlay={\draw[line width = 2pt,yellow] (title.east) -- (frame.north east |- title.east) -- (frame.south east) --(frame.south west);},
                 colback = white, opacityback=0, 
                 coltext = white, left = 0mm, right = 2mm, bottom = 2mm
                 ]
