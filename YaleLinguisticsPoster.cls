@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{YaleLinguisticsPoster}[2026-03-06, v0.0.1] % Florence Zhang-Yukun
+\ProvidesClass{YaleLinguisticsPoster}[2026-03-04, v0] % Florence Zhang-Yukun
 \LoadClass{standalone}
 
 
@@ -22,7 +22,7 @@
 
 %syntax
 \RequirePackage{etoolbox}
-\RequirePackage{xparse}
+\RequirePackage{xparse, xstring}
 \RequirePackage{expl3}
 
 
@@ -61,7 +61,7 @@
 %bibliography
 \usepackage[hidelinks]{hyperref}
 \usepackage[backend = biber, style = apa]{biblatex}
-    \makeatletter\DeclareFieldFormat{bibhyperref}{\iffieldundef{doi}{\iffieldundef{url}{\@firstofone}{\href{\thefield{url}}}}{\href{https://doi.org/\thefield{doi}}}{#1\IfFontExistsTF{Noto Emoji}{\fontspec{Noto Emoji}\textsuperscript{🔍}}{}}}\makeatother
+    \makeatletter\DeclareFieldFormat{bibhyperref}{\iffieldundef{doi}{\iffieldundef{url}{\@firstofone}{\href{\thefield{url}}}}{\href{https://doi.org/\thefield{doi}}}{#1\IfFileExists{assets/magnifier.svg}{\textsuperscript{\includesvg[width=1ex]{assets/magnifier.svg}}}{}}}\makeatother
 
 
 %linguistics
@@ -164,11 +164,10 @@
         
         \node[anchor=north west, inner sep=0pt,  text=yellow, font=\bfseries\itshape, scale = 4] (type) at ([yshift=5mm]dept.south west) {\inserttype};
         
-        \node[anchor= north west, inner sep = 0pt, text = white, font=\bfseries, scale = 2, align = left, text width = 100mm] (timeloc) at ([yshift = -2mm]type.south west) {\IfFontExistsTF{Noto Emoji}{{\fontspec{Noto Emoji}⌚️}}{}\insertdate, \inserttime \\ \IfFontExistsTF{Noto Emoji}{{\fontspec{Noto Emoji}📌}}{}\insertlocation\\
-        \IfFileExists{assets/Zoom.svg}{\includesvg[height = 2.5mm]{assets/Zoom.svg}\ }{}\href{\insertzoomlink}{\large\texttt{\insertzoomlink}}%
+        \node[anchor= north west, inner sep = 0pt, text = white, font=\bfseries, scale = 2, align = left, text width = 100mm] (timeloc) at ([yshift = -2mm]type.south west) {\IfFileExists{assets/date.svg}{\includesvg[width=1em]{assets/date.svg}\ }{}\insertdate, \inserttime \\\IfFileExists{assets/loc.svg}{\includesvg[width=1em]{assets/loc.svg}\ }{}\insertlocation%
         };
 
-        \begin{scope}[shift = {([yshift =-2mm-\profileradius]5mm, 0 |- titleblock.south west)}]
+        \begin{scope}[shift = {([yshift =-3mm-\profileradius]5mm, 0 |- titleblock.south west)}]
             \node (pic) at (0, 0) {};
             \clip ($(pic)+(\profileradius,0)$) circle (\profileradius);
             \ifundef{\profilepath}{\ifundef{\insertdefaultprofilepic}{}{\node at ($(pic)+(\profileradius,0)$) {\insertdefaultprofilepic};}}{\node at ($(pic)+(\profileradius,0)$) {\includegraphics[width=2\profileradius]{\profilepath}};}
@@ -216,7 +215,7 @@
 
         % zoom link
 
-        %\ifundef{\insertzoomlink}{}{\node[anchor=south east, text=white, inner sep = 0pt, scale = 1] (zoomlink) at (209mm,1mm) {\IfFileExists{assets/Zoom.svg}{\includesvg[height = 2.5mm]{assets/Zoom.svg}\ }{}\href{\insertzoomlink}{\large\texttt{\insertzoomlink}}};}
+        \ifundef{\insertzoomlink}{}{\node[anchor=south east, text=white, inner sep = 0pt, scale = 1, font = \Large] (zoomlink) at (205mm,5mm) {\IfFileExists{assets/Zoom.svg}{\includesvg[height = 1ex]{assets/Zoom.svg}\ }{}\href{\insertzoomlink}{\texttt{\IfBeginWith{\insertzoomlink}{https://}{\StrGobbleLeft{\insertzoomlink}{8}}{\IfBeginWith{\insertzoomlink}{http://}{\StrGobbleLeft{\insertzoomlink}{7}}{\insertzoomlink}}}}};}
         
         
         
